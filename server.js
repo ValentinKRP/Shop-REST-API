@@ -14,4 +14,7 @@ app.use(express.json());
 const productRouter = require("./routes/products");
 app.use("/products", productRouter);
 
+const authRouter = require("./routes/authRoutes");
+app.use(authRouter);
+
 app.listen(3000, () => console.log("Server started"));
