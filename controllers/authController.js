@@ -20,6 +20,25 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {};
+exports.login = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
 
-exports.protected = async (req, res) => {};
+    if (!user || !(await bycrypt.compare(password, user.password))) {
+      return res.status(401).send({ message: "Invalid credentials" });
+    }
+
+    const token = jwt.sign({ id: user._id }, "your_jwt_secret", {
+      expiresIn: "1h",
+    });
+
+    res.status(200).json({ token });
+  } catch (error) {
+    res.status(500).send({ message: "error loggin in" });
+  }
+};
+
+exports.protected = async (req, res) => {
+  res.send({ message: "This is a protected route" });
+};
