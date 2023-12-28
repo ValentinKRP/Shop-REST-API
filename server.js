@@ -17,4 +17,7 @@ app.use("/products", productRouter);
 const authRouter = require("./routes/authRoutes");
 app.use(authRouter);
 
+const orderRoutes = require("./routes/orderRoutes");
+app.use(orderRoutes);
+
 app.listen(3000, () => console.log("Server started"));
